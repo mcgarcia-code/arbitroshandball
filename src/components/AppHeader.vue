@@ -18,8 +18,9 @@
       >
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ms-auto">
+
+      <div class="collapse navbar-collapse" id="navbarNav" ref="navbarCollapse">
+        <ul class="navbar-nav ms-auto" @click="closeMenu">
           <li class="nav-item">
             <router-link class="nav-link" to="/">Inicio</router-link>
           </li>
@@ -58,8 +59,31 @@
 </template>
 
 <script>
+// Se importa la funcionalidad 'Collapse' de Bootstrap
+import { Collapse } from "bootstrap";
+
 export default {
   name: "AppHeader",
+  data() {
+    return {
+      bsCollapse: null, // Propiedad para guardar la instancia del menú colapsable
+    };
+  },
+  mounted() {
+    // Creamos la instancia del menú cuando el componente se carga
+    this.bsCollapse = new Collapse(this.$refs.navbarCollapse, {
+      toggle: false,
+    });
+  },
+  methods: {
+    // Método para cerrar el menú si está abierto
+    closeMenu() {
+      // 'show' es la clase que Bootstrap añade cuando el menú está visible
+      if (this.$refs.navbarCollapse.classList.contains("show")) {
+        this.bsCollapse.hide();
+      }
+    },
+  },
 };
 </script>
 
@@ -68,20 +92,30 @@ export default {
   margin-right: 15px;
 }
 
-/* --- ESTILOS AÑADIDOS --- */
 .nav-link {
-  /* Añadimos una transición suave para el cambio de color */
   transition: color 0.2s ease-in-out;
 }
 
-/* Cuando el mouse pasa por encima del enlace */
 .nav-link:hover {
   color: #dc3545 !important; /* Rojo fuerte */
 }
 
-/* Estilo para el enlace de la página activa */
 .nav-link.router-link-exact-active {
   color: #dc3545 !important; /* Rojo fuerte */
   font-weight: bold;
+}
+
+/* --- CORRECCIÓN PARA ALINEACIÓN EN MÓVIL --- */
+/*
+  Este código se aplica solo cuando el menú está colapsado (en móvil).
+  Fuerza a que los elementos de la lista se alineen a la derecha.
+*/
+@media (max-width: 1199.98px) {
+  .navbar-collapse .navbar-nav {
+    align-items: flex-end;
+  }
+  .navbar-collapse .nav-item {
+    text-align: right;
+  }
 }
 </style>

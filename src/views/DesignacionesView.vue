@@ -26,7 +26,7 @@
             <p class="mb-4 fs-5">
               <strong>Fecha:</strong>
               <span class="badge bg-danger fs-6 py-2 px-3 ms-2"
-                >30 y 31 de Agosto</span
+                >6 y 7 de Septiembre</span
               >
             </p>
             <a href="#" class="btn btn-danger btn-lg text-uppercase fw-bold">
