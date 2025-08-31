@@ -20,8 +20,8 @@
             </p>
             <h1 class="display-4 fw-bold mb-3">TORNEO CLAUSURA 2025</h1>
             <p class="lead mb-4">
-              Ya se encuentran disponibles las designaciones para los partidos
-              del fin de semana.
+              ¡Grandes noticias! Ya se encuentran disponibles las designaciones
+              para los emocionantes partidos del fin de semana.
             </p>
             <p class="mb-4 fs-5">
               <strong>Fecha:</strong>
@@ -30,7 +30,7 @@
               >
             </p>
             <a href="#" class="btn btn-danger btn-lg text-uppercase fw-bold">
-              <i class="bi bi-cloud-arrow-down-fill me-2"></i> Descargar
+              <i class="bi bi-cloud-arrow-down-fill me-2"></i> Descargar Listado
             </a>
           </div>
         </div>
@@ -55,7 +55,8 @@
                   <th scope="col">Motivo</th>
                   <th scope="col">Artículo</th>
                   <th scope="col">Sanción</th>
-                  <th scope="col">Vencimiento</th>
+                  <th scope="col">Desde</th>
+                  <th scope="col">Hasta</th>
                 </tr>
               </thead>
               <tbody>
@@ -67,7 +68,8 @@
                   <td>{{ sancion.motivo }}</td>
                   <td>{{ sancion.articulo }}</td>
                   <td>{{ sancion.sancion }}</td>
-                  <td>{{ sancion.vencimiento }}</td>
+                  <td>{{ sancion.desde }}</td>
+                  <td>{{ sancion.hasta }}</td>
                 </tr>
               </tbody>
             </table>
@@ -77,7 +79,7 @@
               to="/tribunal-de-etica"
               class="btn btn-outline-secondary"
             >
-              Ver todas las sanciones
+              Ver todas las resoluciones
             </router-link>
           </div>
         </div>

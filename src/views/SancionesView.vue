@@ -37,12 +37,20 @@
                 v-model="nuevaSancion.sancion"
               />
             </div>
-            <div class="col-md-12">
+            <div class="col-md-6">
               <input
                 type="text"
                 class="form-control"
-                placeholder="Vencimiento (dd/mm/yyyy)"
-                v-model="nuevaSancion.vencimiento"
+                placeholder="Desde (dd/mm/yyyy)"
+                v-model="nuevaSancion.desde"
+              />
+            </div>
+            <div class="col-md-6">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Hasta (dd/mm/yyyy o Indefinido)"
+                v-model="nuevaSancion.hasta"
               />
             </div>
           </div>
@@ -68,7 +76,8 @@
                   <th scope="col">Motivo</th>
                   <th scope="col">Artículo</th>
                   <th scope="col">Sanción</th>
-                  <th scope="col">Vencimiento</th>
+                  <th scope="col">Desde</th>
+                  <th scope="col">Hasta</th>
                 </tr>
               </thead>
               <tbody>
@@ -80,7 +89,8 @@
                   <td>{{ sancion.motivo }}</td>
                   <td>{{ sancion.articulo }}</td>
                   <td>{{ sancion.sancion }}</td>
-                  <td>{{ sancion.vencimiento }}</td>
+                  <td>{{ sancion.desde }}</td>
+                  <td>{{ sancion.hasta }}</td>
                 </tr>
               </tbody>
             </table>
@@ -107,12 +117,14 @@ export default {
   },
   data() {
     return {
+      // 👇 CAMBIO: Se actualizó la estructura para el formulario 👇
       nuevaSancion: {
         arbitro: "",
         motivo: "",
         articulo: "",
         sancion: "",
-        vencimiento: "",
+        desde: "",
+        hasta: "",
       },
     };
   },
@@ -120,12 +132,14 @@ export default {
     guardarSancion() {
       if (!this.nuevaSancion.arbitro) return;
       this.sancionesStore.agregarSancion(this.nuevaSancion);
+      // 👇 CAMBIO: Se actualizó el reseteo del formulario 👇
       this.nuevaSancion = {
         arbitro: "",
         motivo: "",
         articulo: "",
         sancion: "",
-        vencimiento: "",
+        desde: "",
+        hasta: "",
       };
     },
   },
@@ -136,13 +150,12 @@ export default {
 /* Estilos para la sección principal con imagen de fondo oscuro */
 .dark-background-section {
   background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)),
-    url("../assets/sanciones-background.webp"); /* Ruta de tu imagen de fondo */
+    url("../assets/sanciones-background.webp");
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
   min-height: 80vh;
 }
-
 /* Estilo para la tarjeta de administrador */
 .admin-card {
   background-color: #f8f9fa;

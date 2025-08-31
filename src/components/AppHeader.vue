@@ -84,4 +84,15 @@ export default {
   color: #dc3545 !important; /* Rojo fuerte */
   font-weight: bold;
 }
+
+/* --- CÓDIGO PARA ALINEACIÓN EN MÓVIL --- */
+/*
+  Este código se aplica solo cuando el menú está colapsado (en móvil)
+  y fuerza a que los elementos se alineen a la derecha.
+*/
+@media (max-width: 1199.98px) {
+  .navbar-collapse .navbar-nav {
+    align-items: flex-end;
+  }
+}
 </style>

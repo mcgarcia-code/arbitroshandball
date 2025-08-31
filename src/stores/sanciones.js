@@ -6,29 +6,42 @@ export const useSancionesStore = defineStore("sanciones", {
     sanciones: [],
   }),
   getters: {
-    // Devuelve solo las sanciones vigentes.
+    // GETTER ACTUALIZADO: Ahora comprueba si hoy está entre 'desde' y 'hasta'.
     sancionesVigentes: (state) => {
       const hoy = new Date();
       hoy.setHours(0, 0, 0, 0);
 
       return state.sanciones.filter((sancion) => {
-        if (sancion.vencimiento.toLowerCase() === "indefinido") {
-          return true;
-        }
-        // Maneja fechas vacías o mal formateadas para evitar errores
-        if (!sancion.vencimiento || !sancion.vencimiento.includes("/"))
+        // Valida que las fechas existan
+        if (!sancion.desde || !sancion.hasta) return false;
+        if (!sancion.desde.includes("/") || !sancion.hasta.includes("/")) {
+          // Maneja el caso especial "Indefinido"
+          if (sancion.hasta.toLowerCase() === "indefinido") {
+            // Si es indefinido, solo necesita que la fecha de inicio ya haya pasado
+            const [diaDesde, mesDesde, anioDesde] = sancion.desde.split("/");
+            const fechaDesde = new Date(`${anioDesde}-${mesDesde}-${diaDesde}`);
+            fechaDesde.setHours(0, 0, 0, 0);
+            return hoy >= fechaDesde;
+          }
           return false;
+        }
 
-        const [dia, mes, anio] = sancion.vencimiento.split("/");
-        const fechaVencimiento = new Date(`${anio}-${mes}-${dia}`);
-        fechaVencimiento.setHours(0, 0, 0, 0);
+        // Convierte las fechas "dd/mm/yyyy" a objetos Date
+        const [diaDesde, mesDesde, anioDesde] = sancion.desde.split("/");
+        const fechaDesde = new Date(`${anioDesde}-${mesDesde}-${diaDesde}`);
+        fechaDesde.setHours(0, 0, 0, 0);
 
-        return fechaVencimiento >= hoy;
+        const [diaHasta, mesHasta, anioHasta] = sancion.hasta.split("/");
+        const fechaHasta = new Date(`${anioHasta}-${mesHasta}-${diaHasta}`);
+        fechaHasta.setHours(0, 0, 0, 0);
+
+        // Devuelve true si la fecha de hoy está dentro del rango
+        return hoy >= fechaDesde && hoy <= fechaHasta;
       });
     },
   },
   actions: {
-    // Agrega una nueva sanción al principio de la lista.
+    // La acción ahora espera 'desde' y 'hasta'
     agregarSancion(nuevaSancion) {
       this.sanciones.unshift({ id: Date.now(), ...nuevaSancion });
     },
